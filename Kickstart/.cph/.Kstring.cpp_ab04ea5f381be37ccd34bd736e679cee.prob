@@ -1,0 +1,1 @@
+{"name":"Local: Kstring","url":"c:\\Users\\vansh\\Desktop\\Codeforces\\Kickstart\\Kstring.cpp","tests":[{"id":1616299791787,"input":"2\n5 1\nABCAA\n4 2\nABAA","output":"Case #1: 0\nCase #2: 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\vansh\\Desktop\\Codeforces\\Kickstart\\Kstring.cpp","group":"local","local":true}
