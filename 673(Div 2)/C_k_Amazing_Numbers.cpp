@@ -29,28 +29,33 @@ int main()
         int n;
         cin>>n;
         vector<int> v(n);
-        map<int,int> m;
+        set<int> s;
+        map<int,vector<int>> m;
         for(int i=0;i<n;i++)
         {
             cin>>v[i];
-            m[v[i]]++;
+            m[v[i]].push_back(i);
+            s.insert(v[i]);
         }
-        vector<int> ans(n,INT_MAX);
-        for(int i=0;i<n;i++)
+        vector<int> par;
+        for(auto it=s.begin();it!=s.end();it++)
+            par.push_back(*it);
+        vector<int> ans(n+1,-1);
+        for(int i=0;i<par.size();i++)
         {
-            auto it=m.begin();
-            int c=it->second;
-            ans[n-i-1]=it->first;
-            m[v[i]]--;
+            vector<int> temp=m[par[i]];
+            int k=min(temp[0]+1,n-temp[temp.size()-1]);
+            for(int j=1;j<temp.size();j++)
+                k=max(k,temp[j]-temp[j-1]+1);
+            if(ans[k]==-1)
+                ans[k]=par[i];
         }
         for(int i=1;i<n;i++)
-            ans[i]=min(ans[i],ans[i-1]);
-        for(int i=0;i<n;i++)
         {
-            if(ans[i]==INT_MAX)
-                ans[i]=-1;
+            if(ans[i+1]==-1&&ans[i]!=-1)
+                ans[i+1]=ans[i];
         }
-        for(int i=0;i<n;i++)
+        for(int i=1;i<=n;i++)
             cout<<ans[i]<<" ";
         cout<<endl;
     }

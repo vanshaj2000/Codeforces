@@ -34,10 +34,8 @@ pair<int,int> dfs(int ind,vector<vector<int>> &adj,int dep,vector<bool> &vis)
 int main()
 {
     fast_cin();
-    #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
-    #endif
     int zzz=0;
     int t;
     cin>>t;
