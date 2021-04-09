@@ -22,22 +22,19 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
     #endif*/
-    ll t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        cin>>n;
-        vector<int> v(n);
-        set<int> s;
-        map<int,vector<int>> m;
-        for(int i=0;i<n;i++)
-        {
-            cin>>v[i];
-            m[v[i]].push_back(i);
-            s.insert(v[i]);
-        }
-        
-    }
+    string str;
+    cin>>str;
+    int k;
+    cin>>k;
+    vector<int> v(26);
+    for(int i=0;i<26;i++)
+        cin>>v[i];
+    ll ans=0;
+    for(int i=1;i<=str.size();i++)
+        ans+=v[str[i-1]-'a']*i;
+    int maxi=*max_element(v.begin(),v.end());
+    for(int i=1;i<=k;i++)
+        ans+=maxi*(str.size()+i);
+    cout<<ans;
     return 0;
 }

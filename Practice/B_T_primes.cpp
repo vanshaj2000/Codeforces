@@ -14,7 +14,19 @@ double eps = 1e-12;
 #define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define all(x) (x).begin(), (x).end()
 #define sz(x) ((ll)(x).size())
-
+vector<bool> pp(ll n)
+{
+    vector<bool> prime(n+1,true);
+    for (ll p=2;p*p<=n;p++)
+    {
+        if (prime[p]==true)
+        {
+            for (int i=p*p;i<=n;i+=p)
+                prime[i]=false;
+        }
+    }
+    return prime;
+}
 int main()
 {
     fast_cin();
@@ -22,22 +34,24 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
     #endif*/
-    ll t;
-    cin>>t;
-    while(t--)
+    int n;
+    cin>>n;
+    vector<ll> v(n);
+    for(int i=0;i<n;i++)
+        cin>>v[i];
+    vector<bool> prime=pp(1000000);
+    prime[1]=false;
+    for(int i=0;i<n;i++)
     {
-        int n;
-        cin>>n;
-        vector<int> v(n);
-        set<int> s;
-        map<int,vector<int>> m;
-        for(int i=0;i<n;i++)
-        {
-            cin>>v[i];
-            m[v[i]].push_back(i);
-            s.insert(v[i]);
-        }
-        
+        ll ch=v[i];
+        double t1=sqrt(ch);
+        int tt=sqrt(ch);
+        double t2=tt;
+        //cout<<t1<<" "<<t2;
+        if(t1==t2&&prime[tt])
+            cout<<"YES"<<endl;
+        else
+            cout<<"NO"<<endl;
     }
     return 0;
 }
