@@ -15,22 +15,61 @@ double eps = 1e-12;
 #define all(x) (x).begin(), (x).end()
 #define sz(x) ((ll)(x).size())
 
+void dfs(int ind,vector<vector<int>> &adj,vector<bool> &vis)
+{
+    vis[ind]=true;
+    for(int i=0;i<adj[ind].size();i++)
+    {
+        int u=adj[ind][i];
+        if(!vis[u])
+            dfs(u,adj,vis);
+    }
+}
 int main()
 {
     fast_cin();
-    /*#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif*/
-    ll t;
-    cin>>t;
-    while(t--)
+    int n;
+    cin>>n;
+    vector<string> v;
+    vector<int> vis(26,-1);
+    vector<vector<int>> adj(n);
+    for(int i=0;i<n;i++)
     {
-        ll n;
-        cin>>n;
-        vector<ll> v(n);
-        for(int i=0;i<n;i++)
-            cin>>v[i];
+        string temp;
+        cin>>temp;
+        v.push_back(temp);
+        for(int j=0;j<temp.size();j++)
+        {
+            if(vis[temp[j]-'a']==-1)
+                vis[temp[j]-'a']=i;
+            else
+            {
+                int u=vis[temp[j]-'a'];
+                if(u!=i)
+                {
+                    adj[i].push_back(u);
+                    adj[u].push_back(i);
+                }
+            }
+        }
     }
+    /*for(int i=0;i<n;i++)
+    {
+        cout<<i<<" ";
+        for(int j=0;j<adj[i].size();j++)
+            cout<<adj[i][j]<<" ";
+        cout<<endl;
+    }*/
+    int ans=0;
+    vector<bool> visi(n,false);
+    for(int i=0;i<n;i++)
+    {
+        if(!visi[i])
+        {
+            ans++;
+            dfs(i,adj,visi);
+        }
+    }
+    cout<<ans;
     return 0;
 }
