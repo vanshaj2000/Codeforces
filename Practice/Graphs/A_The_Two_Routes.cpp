@@ -15,27 +15,38 @@ double eps = 1e-12;
 #define all(x) (x).begin(), (x).end()
 #define sz(x) ((ll)(x).size())
 
-void dfs(int curr,int ind,int &mini,vector<vector<int>> &adj,vector<int> &vis)
+int dfs(vector<vector<int>> &adj,vector<int> &vis)
 {
-    if(ind==adj.size()-1)
+    int n=adj.size();
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+    vector<int> dis(n,INT_MAX);
+    dis[0]=0;
+    pq.push({0,0});
+    while(!pq.empty())
     {
-        mini=min(curr,mini);
-        return;
+        int t=pq.top().second,d=pq.top().first;
+        pq.pop();
+        if(vis[t])
+            continue;
+        vis[t]=1;
+        for(int i=0;i<adj[t].size();i++)
+        {
+            if(dis[adj[t][i]]>1+dis[t])
+            {
+                dis[adj[t][i]]=1+dis[t];
+                pq.push({dis[adj[t][i]],adj[t][i]});
+            }
+        }
     }
-    vis[ind]=1;
-    for(int i=0;i<adj[ind].size();i++)
-    {
-        int u=adj[ind][i];
-        if(!vis[u])
-            dfs(curr+1,u,mini,adj,vis);
-    }
+    return dis[n-1];
 }
 
 int main()
 {
     fast_cin();
-    int n,m,mini1=INT_MAX,mini2=INT_MAX;
+    int flag=0,n,m;
     cin>>n>>m;
+    vector<int> vis1(n,0),vis2(n,0);
     vector<vector<int>> vis(n,vector<int>(n,2));
     vector<vector<int>> adj(n),adjBus(n);
     for(int i=0;i<n;i++)
@@ -52,14 +63,20 @@ int main()
     {
         for(int j=0;j<n;j++)
         {
-            if(adj[i][j]==2)
+            if(vis[i][j]==2)
             {
-                adj[i].push_back(j);
-                adj[j].push_back(i);
-                adj[i][j]=adj[j][i]=0;   
+                adjBus[i].push_back(j);
+                adjBus[j].push_back(i);
+                vis[i][j]=vis[j][i]=0;   
             }
         }
     }
-    
+    int mini1=dfs(adj,vis1),mini2=dfs(adjBus,vis2);
+    int ans=max(mini1,mini2);
+    if(ans==INT_MAX)
+        cout<<"-1";
+    else
+        cout<<ans;
+    //cout<<((max(mini1,mini2)==INT_MAX)?"-1":max(mini1,mini2));
     return 0;
 }
